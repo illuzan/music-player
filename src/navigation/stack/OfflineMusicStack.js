@@ -1,17 +1,28 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import OfflineMusicScreen from '../../screens/OfflineMusicScreen';
-import { createStackNavigator } from '@react-navigation/stack'
-
-const Stack = createStackNavigator()
+import OfflineAlbumScreen from '../../screens/OfflineAlbumScreen';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+const Tab = createMaterialTopTabNavigator();
 
 export default function OfflineMusicStack() {
   return (
-    <Stack.Navigator
+    <Tab.Navigator
+      initialRouteName="OfflineSongs"
       screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Stack.Screen name='OfflineMusicScreen' component={OfflineMusicScreen} />
-    </Stack.Navigator>
-  )
+        tabBarActiveTintColor: '#fff',
+        tabBarLabelStyle: { fontSize: 16 },
+        tabBarStyle: { backgroundColor: '#111111' },
+      }}>
+      <Tab.Screen
+        name="OfflineSongs"
+        component={OfflineMusicScreen}
+        options={{ tabBarLabel: 'Songs' }}
+      />
+      <Tab.Screen
+        name="OfflineAlbum"
+        component={OfflineAlbumScreen}
+        options={{ tabBarLabel: 'Album' }}
+      />
+    </Tab.Navigator>
+  );
 }

@@ -10,17 +10,30 @@ import {
   MagnifyingGlass,
   User,
 } from 'phosphor-react-native';
+import tw from 'twrnc'
+import colors from '../utils/colors';
+import { PlayerBar } from '../components/bottomBar/PlayerBar';
+import { BottomTabBar } from '../components/bottomBar/BottomTabBar';
 
 const Tab = createBottomTabNavigator();
 
 export default function BottomNavigator() {
+  // const activeTintColor = colors.Accent;
+  // const inactiveTintColor = color(colors.text)
+  //   .alpha(0.5)
+  //   .rgb()
+  //   .string();
   return (
     <Tab.Navigator
+      tabBar={props => (
+        <BottomTabBar {...props} backgroundColor={colors.Surface} activeTintColor={colors.Accent} />
+      )}
       screenOptions={{
-        // tabBarActiveTintColor: colors.activeTintColor,
-        // tabBarInactiveTintColor: colors.inActiveTintColor,
+        tabBarActiveTintColor: colors.Accent,
+        tabBarInactiveTintColor: colors.OnAccent,
         headerShown: false,
         tabBarStyle: {
+          backgroundColor: colors.Background,
           borderTopWidth: 0,
           paddingTop: 10,
           paddingBottom: 10,
@@ -32,7 +45,7 @@ export default function BottomNavigator() {
         component={HomeStack}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <House color={color} weight="regular" size={size} />
+            <House color='#fff' weight="regular" size={size} />
           ),
         }}
       />
@@ -41,7 +54,7 @@ export default function BottomNavigator() {
         component={SearchStack}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MagnifyingGlass color={color} weight="regular" size={size} />
+            <MagnifyingGlass color='#fff' weight="regular" size={size} />
           ),
         }}
       />
@@ -50,7 +63,7 @@ export default function BottomNavigator() {
         component={OfflineMusicStack}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <FloppyDiskBack color={color} weight="regular" size={size} />
+            <FloppyDiskBack color='#fff' weight="regular" size={size} />
           ),
         }}
       />
@@ -59,10 +72,10 @@ export default function BottomNavigator() {
         component={AccountStack}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <User color={color} weight="regular" size={size} />
+            <User color='#fff' weight="regular" size={size} />
           ),
         }}
       />
-    </Tab.Navigator>
+    </Tab.Navigator >
   );
 }

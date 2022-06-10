@@ -1,6 +1,6 @@
 import React from 'react';
 import PlayerStack from './stack/PlayerStack';
-import FindScreen from '../screens/FindScreen';
+import { FindScreen } from '../screens/FindScreen';
 import BottomNavigator from './BottomNavigator';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -12,6 +12,7 @@ export default function AppNavigator() {
       screenOptions={{
         headerShown: false,
       }}>
+      {/* <Stack.Screen name="PlayerStack" component={PlayerStack} /> */}
       <Stack.Screen name="Main" component={BottomNavigator} />
       <Stack.Screen name="PlayerScreen" component={PlayerStack} />
       <Stack.Screen name="FindScreen" component={FindScreen} />

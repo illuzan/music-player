@@ -1,15 +1,14 @@
 import React, { useState, useEffect, useContext, createContext } from 'react'
-import firebaseApp from './firebaseConfig'
+import { firebaseAuth } from './firebaseConfig'
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
-  signOut as signOutFirebase
+  signOut as signOutFirebase,
+  updateProfile
 } from 'firebase/auth'
 
 const AuthContext = createContext()
-const firebaseAuth = getAuth(firebaseApp)
 
 export function AuthProvider({ children }) {
   const auth = useProvideAuth()
@@ -32,17 +31,17 @@ function useProvideAuth() {
   const handleUser = (rawUser) => {
     if (rawUser) {
       const user = formatUser(rawUser)
-      setLoading(false)
       setUser(user)
+      setLoading(false)
       return user
     } else {
-      setLoading(false)
       setUser(false)
+      setLoading(false)
       return false
     }
   }
 
-  async function createUser(email, password) {
+  async function createUser({ name, email, password }) {
     setLoading(true)
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -50,6 +49,7 @@ function useProvideAuth() {
         email,
         password
       )
+      await updateProfile(userCredential.user, { displayName: name })
       return handleUser(userCredential.user)
     } catch (error) {
       setError({
@@ -60,7 +60,7 @@ function useProvideAuth() {
 
   }
 
-  async function signIn(email, password) {
+  async function signIn({ email, password }) {
     setLoading(true)
     try {
       const userCredential = await signInWithEmailAndPassword(
@@ -79,13 +79,15 @@ function useProvideAuth() {
 
   async function signOut() {
     await signOutFirebase(firebaseAuth)
+
     return handleUser(false)
   }
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(firebaseAuth, handleUser)
-
-    return () => unsubscribe()
+    const unsubscribe = onAuthStateChanged(firebaseAuth, (user) => {
+      handleUser(user)
+    });
+    return unsubscribe
   }, [])
 
   return {
@@ -104,6 +106,5 @@ const formatUser = (user) => {
     email: user.email,
     name: user.displayName,
     provider: user.providerData[0].providerId,
-    photoUrl: user.photoURL,
   }
 }

@@ -1,4 +1,10 @@
 rootProject.name = 'musicPlayer'
+include ':@yajanarao_react-native-get-music-files'
+project(':@yajanarao_react-native-get-music-files').projectDir = new File(rootProject.projectDir, '../node_modules/@yajanarao/react-native-get-music-files/android')
+include ':react-native-vector-icons'
+project(':react-native-vector-icons').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-vector-icons/android')
+include ':react-track-player'
+project(':react-track-player').projectDir = new File(rootProject.projectDir, '../node_modules/react-track-player/android')
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'
 includeBuild('../node_modules/react-native-gradle-plugin')
@@ -8,5 +14,5 @@ if (settings.hasProperty("newArchEnabled") && settings.newArchEnabled == "true")
     project(":ReactAndroid").projectDir = file('../node_modules/react-native/ReactAndroid')
 }
 
-apply from: new File(["node", "--print", "require.resolve('expo/package.json')"].execute(null, rootDir).text.trim(), "../scripts/autolinking.gradle")
-useExpoModules()
+include ':react-native-razorpay'
+project(':react-native-razorpay').projectDir = new File(rootProject.projectDir,   '../node_modules/react-native-razorpay/android')

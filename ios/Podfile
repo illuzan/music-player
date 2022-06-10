@@ -19,6 +19,12 @@ target 'musicPlayer' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  pod 'react-track-player', :path => '../node_modules/react-track-player'
+
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+  pod 'RNReactNativeGetMusicFiles', :path => '../node_modules/@yajanarao/react-native-get-music-files'
+
   target 'musicPlayerTests' do
     inherit! :complete
     # Pods for testing
